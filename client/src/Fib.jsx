@@ -42,6 +42,7 @@ const Fib = () => {
         </div>
       );
     }
+    return entries;
   };
 
   return (
