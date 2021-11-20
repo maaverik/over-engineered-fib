@@ -1,12 +1,22 @@
 version: '3'
 services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev 
+      context: ./nginx
+    depends_on:
+      - api
+      - client
+    ports:
+      - '4000:80'
   postgres:
     image: 'postgres:latest'
     environment:
       - POSTGRES_PASSWORD=pg_password # specify without value to get value from OS environment variable
   redis:
     image: 'redis:latest'
-  server:
+  api:
     build: 
       dockerfile: Dockerfile.dev 
       context: ./server
@@ -30,10 +40,12 @@ services:
       - /app/node_modules 
       - ./client:/app 
   worker:
-    stdin_open: true
     build: 
       dockerfile: Dockerfile.dev 
       context: ./worker
     volumes:
       - /app/node_modules 
       - ./worker:/app 
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
