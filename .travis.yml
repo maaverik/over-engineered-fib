@@ -30,3 +30,15 @@ after_success:
   - docker push maaverik1/fib-server
   - docker push maaverik1/fib-worker
   - docker push maaverik1/fib-nginx
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'ap-south-1'
+  app: 'multi-docker'
+  env: 'MultiDocker-env'
+  bucket_name: 'elasticbeanstalk-ap-south-1-115909680305'
+  bucket_path: 'docker-multi'
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
