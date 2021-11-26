@@ -9,7 +9,7 @@ const Fib = () => {
   useEffect(() => {
     fetchValues();
     fetchIndices();
-  }, []);
+  }, [index]);
 
   const fetchValues = async () => {
     const values = await axios.get("/api/values/current");
@@ -23,9 +23,12 @@ const Fib = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await axios.post("/api/values", {
-      index,
-    });
+    await axios
+      .post("/api/values", {
+        index,
+      })
+      .catch((err) => console.error(err.response.data));
+
     setIndex("");
   };
 

@@ -5,11 +5,9 @@ services:
 
   client:
     image: "maaverik1/fib-client"
-    mem_limit: 128m
     hostname: client
   server:
     image: "maaverik1/fib-server"
-    mem_limit: 128m
     hostname: api
     environment:
       - REDIS_HOST=$REDIS_HOST
@@ -21,14 +19,12 @@ services:
       - PGPORT=$PGPORT
   worker:
     image: "maaverik1/fib-worker"
-    mem_limit: 128m
     hostname: worker
     environment:
       - REDIS_HOST=$REDIS_HOST
       - REDIS_PORT=$REDIS_PORT
   nginx:
     image: "maaverik1/fib-nginx"
-    mem_limit: 128m
     hostname: nginx
     ports:
       - "80:80"
