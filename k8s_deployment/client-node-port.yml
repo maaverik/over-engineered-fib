@@ -1,0 +1,14 @@
+# NodePort is normally not used in production
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-node-port 
+spec:
+  type: NodePort 
+  ports:
+    - port: 3050
+      targetPort: 3000
+      nodePort: 31515 # the port that we use from say, the browser to access this container
+  selector:
+    # looks for this label to figure out the pod that should expose its port to the outside world
+   component: web
