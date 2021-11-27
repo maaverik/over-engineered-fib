@@ -25,3 +25,9 @@ spec:
             - name: postgres-storage  # name must match volume mount name
               mountPath: /var/lib/postgresql/data
               subPath: postgres       # this is postgres specific
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword    # should be created separately
+                  key: PGPASSWORD     # this is the key in the k-v pair in the secret
