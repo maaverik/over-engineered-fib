@@ -15,6 +15,11 @@ spec:
       containers:
         - name: worker 
           image: maaverik1/fib-worker
-     
+          env: 
+            - name: REDIS_HOST
+              value: redis-cluster-ip-service
+            - name: REDIS_PORT
+              value: 6379
+
 # the worker pod doesn't need anything to be connected to it, it connects to redis itself,
 # so it doesn't need exposed ports or a Service of its own
