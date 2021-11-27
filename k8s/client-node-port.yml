@@ -8,7 +8,7 @@ spec:
   ports:
     - port: 3050
       targetPort: 3000
-      nodePort: 31515 # the port that we use from say, the browser to access this container
+      nodePort: 31515 # the port that we use from outside, say, the browser to access this container
   selector:
     # looks for this label to figure out the pod that should expose its port to the outside world
    component: web

@@ -2,7 +2,7 @@ version: "3"
 services:
   # postgres and redis images are not added since the corresponding AWS services 
   # will be used for those: RDS and Elasticache
-
+  # for other services, we use images pre-built and pushed by travis
   client:
     image: "maaverik1/fib-client"
     hostname: client
