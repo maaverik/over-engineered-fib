@@ -1,0 +1,30 @@
+language: generic
+
+sudo: required
+
+services:
+  - docker
+
+env:
+  global:
+    # save git SHA as env variable to use as image tag later
+    - GIT_SHA=$(git rev-parse HEAD)
+
+before_install:
+  # logging in in Travis env for pushing images in the deploy script later on
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  # we'll use dev dockerfile for client since it's the only one that has a test 
+  # and only dev version comes with a test server
+  # the last arg in the below command is the build context, i.e., the directory with files to build
+  - docker build -t maaverik1/fib-client-test -f ./client/Dockerfile.dev ./client
+
+# add test commands here
+script:
+  # the below command runs the test and then exits with exit code 0 if test ran successfully
+  - docker run -e CI=true maaverik1/fib-client-test npm test
+
+deploy:
+  provider: script 
+  script: bash ./deploy.sh
+  on:
+    branch: main
